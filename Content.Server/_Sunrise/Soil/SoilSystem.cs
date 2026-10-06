@@ -1,4 +1,3 @@
-using Content.Server.Botany.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
@@ -9,6 +8,10 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
 namespace Content.Server._Sunrise.Soil;
+
+/// <summary>
+/// Система для мешка с землей
+/// </summary>
 
 public sealed class SoilSystem : EntitySystem
 {
