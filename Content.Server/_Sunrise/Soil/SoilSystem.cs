@@ -6,6 +6,7 @@ using Content.Server.Damage.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server._Sunrise.Soil;
 
@@ -13,13 +14,14 @@ namespace Content.Server._Sunrise.Soil;
 /// Система для мешка с землей
 /// </summary>
 
-public sealed class SoilSystem : EntitySystem
+public sealed partial class SoilSystem : EntitySystem
 {
     [Dependency] private  SharedMapSystem _map = default!;
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private  PopupSystem _popup = default!;
     [Dependency] private  StaminaSystem _stamina = default!;
     [Dependency] private  SharedTransformSystem _transform = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
 
     private EntityQuery<PlantHolderComponent> _plantHolderQuery;
 
@@ -62,10 +64,10 @@ public sealed class SoilSystem : EntitySystem
     }
 
     public bool CanPlantSoil(
-        Entity<SoilComponent> ent,
-        EntityUid user,
-        out EntityCoordinates coords,
-        bool quiet = true)
+    Entity<SoilComponent> ent,
+    EntityUid user,
+    out EntityCoordinates coords,
+    bool quiet = true)
     {
         var userCoords = _transform.GetMapCoordinates(user);
 
@@ -92,12 +94,14 @@ public sealed class SoilSystem : EntitySystem
             tile,
             grid);
 
-        var anchored = _map.GetAnchoredEntitiesEnumerator(
+        
+        var entitiesOnTile = _lookup.GetLocalEntitiesIntersecting(
             gridUid,
-            grid,
-            tile);
+            tile,
+            flags: LookupFlags.All,
+            gridComp: grid);
 
-        while (anchored.MoveNext(out var entity))
+        foreach (var entity in entitiesOnTile)
         {
             if (!_plantHolderQuery.HasComp(entity))
                 continue;
@@ -108,8 +112,8 @@ public sealed class SoilSystem : EntitySystem
             return false;
         }
 
-        return true;
-    }
+    return true;
+}
 
     private void ShowPlantFailure(
         Entity<SoilComponent> ent,
