@@ -46,6 +46,7 @@ public sealed partial class SoilSystem : EntitySystem
         TryPlantSoil(ent, args.User);
     }
 
+    
     public bool TryPlantSoil(
         Entity<SoilComponent> ent,
         EntityUid user)
@@ -62,6 +63,10 @@ public sealed partial class SoilSystem : EntitySystem
         DoPlantSoil(ent, user, coords);
         return true;
     }
+
+    /// <summary>
+    /// Проверяет, находится ли пользователь на гриде и отсутствуют ли  сущности с PlantHolderComponent, пересекающие его текущий тайл. 
+    /// </summary>
 
     public bool CanPlantSoil(
     Entity<SoilComponent> ent,
