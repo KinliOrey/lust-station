@@ -1,12 +1,14 @@
 using Content.Server.Popups;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using Content.Server.Botany.Components;
+using Content.Server.Botany.Components;  //lust-edit 
 using Content.Server.Damage.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;    //lust-edit
+using Robust.Shared.GameObjects;    //lust-edit
+
+
 
 namespace Content.Server._Sunrise.Soil;
 
@@ -16,13 +18,19 @@ namespace Content.Server._Sunrise.Soil;
 
 public sealed partial class SoilSystem : EntitySystem
 {
+    //lust-edit-start
+
     [Dependency] private  SharedMapSystem _map = default!;
     [Dependency] private IMapManager _mapManager = default!;
+
+    //lust-edit-end
+
     [Dependency] private  PopupSystem _popup = default!;
     [Dependency] private  StaminaSystem _stamina = default!;
+
+    //lust-edit-start
     [Dependency] private  SharedTransformSystem _transform = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
-
     private EntityQuery<PlantHolderComponent> _plantHolderQuery;
 
     public override void Initialize()
@@ -140,6 +148,8 @@ public sealed partial class SoilSystem : EntitySystem
 
         var targetMeta = MetaData(ent);
         var userMeta = MetaData(user);
+
+        //lust-edit-end
 
         _popup.PopupEntity(
             Loc.GetString(
