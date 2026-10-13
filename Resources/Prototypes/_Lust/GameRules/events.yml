@@ -30,3 +30,27 @@
     maxItems: 7
     maxOccurrences: 1
     occursDuringRoundEnd: false
+
+- type: entity
+  id: CrewMonitoringMalf
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    minimumPlayers: 1
+    weight: 4
+    duration: 60
+    maxDuration: 180
+    reoccurrenceDelay: 1
+    maxOccurrences: 1
+    occursDuringRoundEnd: false
+  - type: CrewMonitoringMalfRule
+    minPlayerFraction: 1
+    maxPlayerFraction: 1
+    criticalChance: 25
+    deadChance: 10
+    poorChance: 50
+  - type: GameRule
+    delay:
+      min: 0
+      max: 0
