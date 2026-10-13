@@ -26,6 +26,7 @@
     - id: VentClog
     - id: VentFleshWorms # Sunrise-Edit
     - id: VentbullMigration # Sunrise-Edit
+    - id: vendingmachineMalfunction # Lust-edit
 
 - type: entityTable
   id: BasicAntagEventsTable
