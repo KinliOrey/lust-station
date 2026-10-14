@@ -245,4 +245,5 @@
     - id: SolarFlare
     - id: VentClog
     - id: vendingmachineMalfunction # Lust-edit
-    - id: LustCrewMonitoringMalf # Lust-edit
+    - id: CrewMonitoringMalf # Lust-edit
+    - id: RadioChannelShuffle # Lust-edit

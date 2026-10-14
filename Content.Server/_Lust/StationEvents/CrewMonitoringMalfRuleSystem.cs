@@ -45,6 +45,11 @@ public sealed class CrewMonitoringMalfRuleSystem
 
         var candidates = new List<EntityUid>();
 
+        // Запрос перебирает только сущности, имеющие одновременно:
+        // ActorComponent     — управление подключённым игроком;
+        // MobStateComponent  — состояние персонажа;
+        // TransformComponent — положение и принадлежность к миру.
+
         var query =
             EntityQueryEnumerator<ActorComponent, MobStateComponent, TransformComponent>();
 
@@ -53,7 +58,10 @@ public sealed class CrewMonitoringMalfRuleSystem
                    out _,
                    out var mobState,
                    out var xform))
-        {
+        {   
+            // Мёртвые персонажи не участвуют.
+            // Критическое состояние не исключается
+
             if (mobState.CurrentState == MobState.Dead)
                 continue;
 
@@ -124,9 +132,12 @@ public sealed class CrewMonitoringMalfRuleSystem
 
         foreach (var playerUid in component.AffectedPlayers)
         {
+
+            
+
             if (!TryComp<CrewMonitoringSpoofComponent>(playerUid, out var spoof))
                 continue;
-
+            // Не удаляем подмену, если она уже принадлежит другому, более позднему событию.
             if (spoof.Rule != uid)
                 continue;
 
@@ -143,14 +154,17 @@ public sealed class CrewMonitoringMalfRuleSystem
 
         if (Timing.CurTime >= spoof.EndTime)
             return;
-
+        
+        
         switch (spoof.FakeState)
         {
             case CrewMonitoringFakeState.Dead:
                 status.IsAlive = false;
                 break;
-
+           
+            // Если датчик у персонажа в режиме жив/мертв не добавляем его.
             case CrewMonitoringFakeState.Critical:
+             
                 if (status.TotalDamage == null)
                     return;
 
@@ -158,11 +172,12 @@ public sealed class CrewMonitoringMalfRuleSystem
                 status.TotalDamageThreshold = 100;
                 status.TotalDamage = 150;
                 break;
-
+            
+            // Если датчик у персонажа в режиме жив/мертв не добавляем его.
             case CrewMonitoringFakeState.Poor:
                 if (status.TotalDamage == null)
                     return;
-
+                // Если персонаж реально умер после начала события, событие до окончания эффекта всё равно будет показывать его живым.
                 status.IsAlive = true;
                 status.TotalDamageThreshold = 100;
                 status.TotalDamage = 75;

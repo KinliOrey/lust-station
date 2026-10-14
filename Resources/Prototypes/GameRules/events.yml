@@ -28,6 +28,7 @@
     - id: VentbullMigration # Sunrise-Edit
     - id: vendingmachineMalfunction # Lust-edit
     - id: LustCrewMonitoringMalf # Lust-edit
+    - id: RadioChannelShuffle # Lust-edit
 
 - type: entityTable
   id: BasicAntagEventsTable
