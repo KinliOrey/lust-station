@@ -12,7 +12,7 @@
   - type: RuleGrids
 
 - type: entity
-  id: vendingmachineMalfunction
+  id: VendingmachineMalfunction
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent

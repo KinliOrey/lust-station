@@ -152,19 +152,23 @@ public sealed class CrewMonitoringMalfRuleSystem
         if (!TryComp<CrewMonitoringSpoofComponent>(playerUid, out var spoof))
             return;
 
-        if (Timing.CurTime >= spoof.EndTime)
+        // Подмена только при существующем активном правиле ивента и до времени окончания.
+        if (!TryComp<CrewMonitoringMalfRuleComponent>(spoof.Rule, out _) ||
+            !TryComp<GameRuleComponent>(spoof.Rule, out var gameRule) ||
+            !GameTicker.IsGameRuleActive(spoof.Rule, gameRule) ||
+            Timing.CurTime >= spoof.EndTime)
+        {
+            RemComp<CrewMonitoringSpoofComponent>(playerUid);
             return;
-        
-        
+        }
+
         switch (spoof.FakeState)
         {
             case CrewMonitoringFakeState.Dead:
                 status.IsAlive = false;
                 break;
-           
-            // Если датчик у персонажа в режиме жив/мертв не добавляем его.
+
             case CrewMonitoringFakeState.Critical:
-             
                 if (status.TotalDamage == null)
                     return;
 
@@ -172,8 +176,7 @@ public sealed class CrewMonitoringMalfRuleSystem
                 status.TotalDamageThreshold = 100;
                 status.TotalDamage = 150;
                 break;
-            
-            // Если датчик у персонажа в режиме жив/мертв не добавляем его.
+
             case CrewMonitoringFakeState.Poor:
                 if (status.TotalDamage == null)
                     return;

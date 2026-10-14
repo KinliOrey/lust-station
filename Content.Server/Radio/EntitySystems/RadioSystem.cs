@@ -103,7 +103,7 @@ public sealed partial class RadioSystem : EntitySystem
         message = trySendEvent.Message;
         // Sunrise added end
 
-        // Lust-Start
+        // Lust-Start - для ивента перемешивания радиоканалов.  
         if (!TryApplyChannelShuffle(radioSource, ref channel))
         return;
         // Lust-End

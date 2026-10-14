@@ -26,7 +26,7 @@
     - id: VentClog
     - id: VentFleshWorms # Sunrise-Edit
     - id: VentbullMigration # Sunrise-Edit
-    - id: vendingmachineMalfunction # Lust-edit
+    - id: VendingmachineMalfunction # Lust-edit
     - id: CrewMonitoringMalf # Lust-edit
     - id: RadioChannelShuffle # Lust-edit
 

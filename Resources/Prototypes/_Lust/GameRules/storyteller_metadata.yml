@@ -1,6 +1,6 @@
 # Сбой раздатчиков.
 - type: storytellerMetadata
-  id: VendingMachineMalf
+  id: VendingmachineMalfunction
   threatType: MinorCalm
   threatCost: 10
   minStationStrength: 0
