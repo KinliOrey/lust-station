@@ -6,7 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed partial class VendingMachineMalfRule
+public sealed partial class VendingMachineMalfRuleSystem
     : StationEventSystem<VendingMachineMalfRuleComponent>
 {
     [Dependency] private VendingMachineSystem _vending = default!;

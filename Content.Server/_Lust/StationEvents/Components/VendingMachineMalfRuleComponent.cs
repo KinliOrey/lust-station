@@ -6,7 +6,7 @@ namespace Content.Server.StationEvents.Components;
 /// Случайные вендинговые автоматы выбрасывают компоненты
 /// </summary>
 
-[RegisterComponent, Access(typeof(VendingMachineMalfRuleComponent))]
+[RegisterComponent, Access(typeof(VendingMachineMalfRuleSystem))]
 public sealed partial class VendingMachineMalfRuleComponent : Component
 {
     /// <summary>
