@@ -24,12 +24,10 @@
     weight: 5
     duration: 1
   - type: VendingMachineMalfRule
-    minMachines: 20
-    maxMachines: 20
+    minMachines: 3
+    maxMachines: 30
     minItems: 1
     maxItems: 7
-    maxOccurrences: 1
-    occursDuringRoundEnd: false
 
 - type: entity
   id: CrewMonitoringMalf
