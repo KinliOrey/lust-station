@@ -77,24 +77,10 @@ public sealed partial class CrewMonitoringConsoleSystem
         var sensors = component.ConnectedSensors.Values.ToList();
         ApplyFilter(uid, ref sensors);
 
-        var uniqueSensors = new Dictionary<NetEntity, SuitSensorStatus>();
 
-        foreach (var sensor in sensors)
-        {
-            if (uniqueSensors.TryGetValue(sensor.OwnerUid, out var existingSensor))
-            {
-                if (existingSensor.Coordinates != null && sensor.Coordinates == null)
-                    continue;
-
-                if (existingSensor.DamagePercentage != null && sensor.DamagePercentage == null)
-                    continue;
-            }
-
-            uniqueSensors[sensor.OwnerUid] = sensor;
-        }
         // Lust-edit end
 
-        foreach (var sensor in uniqueSensors.Values)
+        foreach (var sensor in sensors)
         {
             var damagePercentage = sensor.DamagePercentage;
             var isCritical = damagePercentage.HasValue
