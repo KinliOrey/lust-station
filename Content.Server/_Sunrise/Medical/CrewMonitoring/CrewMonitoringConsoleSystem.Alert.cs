@@ -39,7 +39,7 @@ public sealed partial class CrewMonitoringConsoleSystem
 
             alert.NextCorpseAlertTime = curTime + TimeSpan.FromSeconds(alert.CorpseAlertTime);
 
-            if (!HasCorpsesOutsideMorgue(console))
+             if (!HasVisibleCorpsesOutsideMorgue(uid, console)) // Lust-edit - Фикс уведомления мониторов
                 continue;
 
             TryPlayCorpseAlertSound(uid, alert);
@@ -63,25 +63,30 @@ public sealed partial class CrewMonitoringConsoleSystem
         EnsureComp<CrewMonitoringCorpseAlertComponent>(uid);
     }
 
-    private bool HasCorpsesOutsideMorgue(CrewMonitoringConsoleComponent component)
-    {
-        foreach (var sensor in component.ConnectedSensors.Values)
-        {
-            var damagePercentage = sensor.DamagePercentage;
-            var isCritical = damagePercentage.HasValue && damagePercentage.Value >= CriticalDamagePercentage;
+    // Lust-edit start
+    // Фикс сигнала тревоги для мониторов. Теперь мониторы пиликают тревогой только на тех пешек, которые на этом мониторе отображаюбтся 
+    // Условно монитор СБ больше не реагирует на крит пассажира.
+    // в подпапке LUST создан новый класс CrewMonitoringConsoleSystem.Alert.cs с изменение логики ниже, а эта больше не нужна
+    // private bool HasCorpsesOutsideMorgue(CrewMonitoringConsoleComponent component)
+    // {
+    //     foreach (var sensor in component.ConnectedSensors.Values)
+    //     {
+    //         var damagePercentage = sensor.DamagePercentage;
+    //         var isCritical = damagePercentage.HasValue && damagePercentage.Value >= CriticalDamagePercentage;
 
-            if (sensor.IsAlive && !isCritical)
-                continue;
+    //         if (sensor.IsAlive && !isCritical)
+    //             continue;
 
-            if (!TryGetEntity(sensor.OwnerUid, out var ownerUid))
-                continue;
+    //         if (!TryGetEntity(sensor.OwnerUid, out var ownerUid))
+    //             continue;
 
-            if (!IsEntityInMorgue(ownerUid.Value))
-                return true;
-        }
+    //         if (!IsEntityInMorgue(ownerUid.Value))
+    //             return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
+    // Lust-edit end
 
     private bool IsEntityInMorgue(EntityUid entity)
     {
