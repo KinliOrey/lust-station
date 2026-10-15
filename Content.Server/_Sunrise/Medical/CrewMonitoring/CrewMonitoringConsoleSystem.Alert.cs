@@ -7,6 +7,8 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using System.Linq; // Lust-edit
+using Content.Shared.Medical.SuitSensor; // Lust-edit
 
 namespace Content.Server.Medical.CrewMonitoring;
 
@@ -39,7 +41,7 @@ public sealed partial class CrewMonitoringConsoleSystem
 
             alert.NextCorpseAlertTime = curTime + TimeSpan.FromSeconds(alert.CorpseAlertTime);
 
-             if (!HasVisibleCorpsesOutsideMorgue(uid, console)) // Lust-edit - Фикс уведомления мониторов
+             if (!HasCorpsesOutsideMorgue(uid, console)) // Lust-edit - Фикс уведомления мониторов
                 continue;
 
             TryPlayCorpseAlertSound(uid, alert);
@@ -63,30 +65,53 @@ public sealed partial class CrewMonitoringConsoleSystem
         EnsureComp<CrewMonitoringCorpseAlertComponent>(uid);
     }
 
-    // Lust-edit start
-    // Фикс сигнала тревоги для мониторов. Теперь мониторы пиликают тревогой только на тех пешек, которые на этом мониторе отображаюбтся 
-    // Условно монитор СБ больше не реагирует на крит пассажира.
-    // в подпапке LUST создан новый класс CrewMonitoringConsoleSystem.Alert.cs с изменение логики ниже, а эта больше не нужна
-    // private bool HasCorpsesOutsideMorgue(CrewMonitoringConsoleComponent component)
-    // {
-    //     foreach (var sensor in component.ConnectedSensors.Values)
-    //     {
-    //         var damagePercentage = sensor.DamagePercentage;
-    //         var isCritical = damagePercentage.HasValue && damagePercentage.Value >= CriticalDamagePercentage;
+    
 
-    //         if (sensor.IsAlive && !isCritical)
-    //             continue;
+    private bool HasCorpsesOutsideMorgue(
+        EntityUid uid,
+        CrewMonitoringConsoleComponent component)
+    {
+        // Lust-edit start 
+        // Фикс сигнала тревоги для мониторов. Теперь мониторы пиликают тревогой только на тех пешек, которые на этом мониторе отображаюбтся 
+        // Условно монитор СБ больше не реагирует на крит пассажира.
+        var sensors = component.ConnectedSensors.Values.ToList();
+        ApplyFilter(uid, ref sensors);
 
-    //         if (!TryGetEntity(sensor.OwnerUid, out var ownerUid))
-    //             continue;
+        var uniqueSensors = new Dictionary<NetEntity, SuitSensorStatus>();
 
-    //         if (!IsEntityInMorgue(ownerUid.Value))
-    //             return true;
-    //     }
+        foreach (var sensor in sensors)
+        {
+            if (uniqueSensors.TryGetValue(sensor.OwnerUid, out var existingSensor))
+            {
+                if (existingSensor.Coordinates != null && sensor.Coordinates == null)
+                    continue;
 
-    //     return false;
-    // }
-    // Lust-edit end
+                if (existingSensor.DamagePercentage != null && sensor.DamagePercentage == null)
+                    continue;
+            }
+
+            uniqueSensors[sensor.OwnerUid] = sensor;
+        }
+        // Lust-edit end
+
+        foreach (var sensor in uniqueSensors.Values)
+        {
+            var damagePercentage = sensor.DamagePercentage;
+            var isCritical = damagePercentage.HasValue
+                && damagePercentage.Value >= CriticalDamagePercentage;
+
+            if (sensor.IsAlive && !isCritical)
+                continue;
+
+            if (!TryGetEntity(sensor.OwnerUid, out var ownerUid))
+                continue;
+
+            if (!IsEntityInMorgue(ownerUid.Value))
+                return true;
+        }
+
+        return false;
+    }
 
     private bool IsEntityInMorgue(EntityUid entity)
     {
