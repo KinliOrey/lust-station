@@ -41,7 +41,7 @@ public sealed partial class CrewMonitoringConsoleSystem
 
             alert.NextCorpseAlertTime = curTime + TimeSpan.FromSeconds(alert.CorpseAlertTime);
 
-             if (!HasCorpsesOutsideMorgue(uid, console)) // Lust-edit - Фикс уведомления мониторов
+            if (!HasCorpsesOutsideMorgue(uid, console)) // Lust-edit - Фикс уведомления мониторов
                 continue;
 
             TryPlayCorpseAlertSound(uid, alert);
