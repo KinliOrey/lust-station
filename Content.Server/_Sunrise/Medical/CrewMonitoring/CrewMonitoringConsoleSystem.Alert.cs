@@ -66,14 +66,13 @@ public sealed partial class CrewMonitoringConsoleSystem
     }
 
     
-
+    // Lust-edit start 
+    // Фикс сигнала тревоги для мониторов. Теперь мониторы пиликают тревогой только на тех пешек, которые на этом мониторе отображаюбтся 
+    // Условно монитор СБ больше не реагирует на крит пассажира.
     private bool HasCorpsesOutsideMorgue(
         EntityUid uid,
         CrewMonitoringConsoleComponent component)
     {
-        // Lust-edit start 
-        // Фикс сигнала тревоги для мониторов. Теперь мониторы пиликают тревогой только на тех пешек, которые на этом мониторе отображаюбтся 
-        // Условно монитор СБ больше не реагирует на крит пассажира.
         var sensors = component.ConnectedSensors.Values.ToList();
         ApplyFilter(uid, ref sensors);
 
@@ -83,8 +82,7 @@ public sealed partial class CrewMonitoringConsoleSystem
         foreach (var sensor in sensors)
         {
             var damagePercentage = sensor.DamagePercentage;
-            var isCritical = damagePercentage.HasValue
-                && damagePercentage.Value >= CriticalDamagePercentage;
+            var isCritical = damagePercentage.HasValue && damagePercentage.Value >= CriticalDamagePercentage;
 
             if (sensor.IsAlive && !isCritical)
                 continue;
