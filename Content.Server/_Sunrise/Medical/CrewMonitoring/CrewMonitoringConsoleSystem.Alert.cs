@@ -76,10 +76,8 @@ public sealed partial class CrewMonitoringConsoleSystem
         var sensors = component.ConnectedSensors.Values.ToList();
         ApplyFilter(uid, ref sensors);
 
-
-        // Lust-edit end
-
         foreach (var sensor in sensors)
+        // Lust-edit end
         {
             var damagePercentage = sensor.DamagePercentage;
             var isCritical = damagePercentage.HasValue && damagePercentage.Value >= CriticalDamagePercentage;
