@@ -87,6 +87,8 @@
     delay:
       min: 0
       max: 0
+      
+- type: entity    
   id: LustRadiationOutburst
   parent: BaseGameRule
   components:
