@@ -28,7 +28,6 @@
     - id: VentbullMigration # Sunrise-Edit
     - id: VendingmachineMalfunction # Lust-edit
     - id: CrewMonitoringMalf # Lust-edit
-    - id: RadioChannelShuffle # Lust-edit
     - id: LustHoloCarpSpawn # Lust-Edit
     - id: LustRadiationOutburst # Lust-Edit
     - id: LustRadiationStorm # Lust-Edit

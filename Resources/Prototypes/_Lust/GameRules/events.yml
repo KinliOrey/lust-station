@@ -34,6 +34,9 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
+    endAnnouncement: station-event-crew-monitoring-malf-end
+    endAudio:
+      path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     minimumPlayers: 1
     weight: 4
@@ -48,41 +51,6 @@
     criticalChance: 25
     deadChance: 10
     poorChance: 50
-  - type: GameRule
-    delay:
-      min: 0
-      max: 0
-
-- type: entity
-  id: RadioChannelShuffle
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-radio-channel-shuffle-start
-    endAnnouncement: station-event-radio-channel-shuffle-end
-    startAudio:
-      path: /Audio/_Sunrise/Announcements/announce_dig.ogg
-    endAudio:
-      path: /Audio/_Sunrise/Announcements/announce_dig.ogg
-    earliestStart: 15
-    minimumPlayers: 1
-    weight: 4
-    duration: 60
-    maxDuration: 180
-    reoccurrenceDelay: 30
-    maxOccurrences: 2
-    occursDuringRoundEnd: false
-  - type: RadioChannelShuffleRule
-    redirectChance: 0.3
-    channels:
-    - Common
-    - Command
-    - Engineering
-    - Medical
-    - Security
-    - Science
-    - Service
-    - Supply
   - type: GameRule
     delay:
       min: 0
