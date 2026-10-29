@@ -12,7 +12,7 @@
   - type: RuleGrids
 
 - type: entity
-  id: VendingmachineMalfunction
+  id: LustVendingMachineMalfunction
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
@@ -30,7 +30,7 @@
     maxItems: 7
 
 - type: entity
-  id: CrewMonitoringMalf
+  id: LustCrewMonitoringMalf
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent

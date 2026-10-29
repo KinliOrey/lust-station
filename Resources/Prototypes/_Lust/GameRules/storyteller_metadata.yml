@@ -1,6 +1,6 @@
 # Сбой раздатчиков.
 - type: storytellerMetadata
-  id: VendingmachineMalfunction
+  id: LustVendingMachineMalfunction
   threatType: MinorCalm
   threatCost: 10
   minStationStrength: 0
@@ -8,7 +8,7 @@
 
 # Ложные показания мониторинга экипажа.
 - type: storytellerMetadata
-  id: CrewMonitoringMalf
+  id: LustCrewMonitoringMalf
   threatType: MinorCalm
   threatCost: 15
   minStationStrength: 0
