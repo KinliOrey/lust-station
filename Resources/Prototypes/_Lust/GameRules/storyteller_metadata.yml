@@ -27,3 +27,10 @@
   threatCost: 45
   minStationStrength: 15
   maxStress: 100
+
+- type: storytellerMetadata
+  id: LustRadiationOutburst
+  threatType: MajorCalm
+  threatCost: 30
+  minStationStrength: 15
+  maxStress: 75
