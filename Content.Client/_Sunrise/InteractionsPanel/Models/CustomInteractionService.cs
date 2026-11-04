@@ -137,6 +137,11 @@ public sealed partial class CustomInteractionService
 
                 switch (key)
                 {
+                    // Lust-Start Определение кастомых дейтсвий как ERP 
+                    case "IS_ERP":
+                        LoadErpSetting(currentInteraction, value);
+                        break;
+                    // Lust-End
                     case "NAME":
                         currentInteraction.Name = value;
                         break;

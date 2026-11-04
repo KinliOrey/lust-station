@@ -304,11 +304,11 @@
                                 <BoxContainer Orientation="Vertical"
                                             HorizontalExpand="True">
 
-                                    <Label Text="Запретить ERP-взаимодействия со мной"
+                                    <Label Text="{Loc 'lust-interactions-lock-erp-label'}"
                                         FontColorOverride="#ffb6c1"
                                         VerticalAlignment="Center"/>
 
-                                    <Label Text="Обычные взаимодействия остаются доступны.&#10;Только для статуса «Неполное ERP»."
+                                    <Label Text="{Loc 'lust-interactions-lock-erp-description'}"
                                         FontColorOverride="#b39db3"
                                         StyleClasses="LabelSubText"
                                         Margin="0 2 0 0"

@@ -884,7 +884,10 @@ public sealed partial class InteractionsUIWindow : DefaultWindow
                 customInteraction.EffectChance,
                 customInteraction.EntityEffectId,
                 customInteraction.Cooldown
-            );
+            )
+            {                                
+                IsErp = customInteraction.IsErp // Lust- edit Передаём сохранённую авторскую отметку ERP серверу.               
+            };
 
             _owner?.SendBoundUserInterfaceMessage(new InteractionMessage(interactionId, customData));
         }

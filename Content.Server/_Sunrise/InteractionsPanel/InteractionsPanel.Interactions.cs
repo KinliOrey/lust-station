@@ -212,11 +212,13 @@ public partial class InteractionsPanel
         if (args is { IsCustom: true, CustomData: not null })
         {
             // Lust-Start
-            // У кастомных действий нет проверяемого списка зон.
-            // Блокируем их при «Без ERP» или включённой галочке
-            // у цели со статусом «Неполное ERP».
-            if (HasTargetErpLock(ent.Owner, target.Value))
+            // Запрещаем только кастомные действия, помеченные как ERP.
+            // Обычные кастомные действия остаются доступны.
+            if (args.CustomData.IsErp
+                && HasTargetErpLock(ent.Owner, target.Value))
+            {
                 return;
+            }
             // Lust-End
             HandleCustomInteraction(ent.Owner, target.Value, args.InteractionId, args.CustomData, userSession, targetSession, targetIsPlayer);
             return;

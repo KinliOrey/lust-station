@@ -51,7 +51,7 @@ public sealed class RequestUndressMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class CustomInteractionData
+public sealed partial class CustomInteractionData // Lust-Edit: дополнительные данные кастомного действия в _Lust.
 {
     public string InteractionMessage { get; }
     public string? SoundId { get; }
